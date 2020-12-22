@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>lovely singh reporting</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css//index.css') }}">
+
+  </head>
+  <body>
+
+
+
+    <div class="chat">
+
+    <h2>Bathe-Shate</h2>
+
+    {% for i in content %}
+      {% if i[1]=="text" %}
+      <p>{{i[0]}}</p>
+      {% endif %}
+
+      {% if i[1]=="img" %}
+      <p><img src="{{i[0]}}" width="150px" height="100px"><p>
+
+      {% endif %}
+    {%endfor%}
+
+    <form method="post" action="/" enctype="multipart/form-data">
+      <dl>
+          <p>
+            <input type="text" name="text" value="" width="100px">
+
+            <input type="file" name="files">
+
+            <input type="submit" value="Send">
+         </p>
+         </dl>
+
+    </form>
+    </div>
+
+
+
+  </body>
+</html>
