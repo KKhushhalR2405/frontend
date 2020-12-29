@@ -3,6 +3,7 @@ import os
 import urllib.request
 from flask import *
 from werkzeug.utils import secure_filename
+import filetype
 
 upload_folder = r".\static\uploads"
 
@@ -26,21 +27,25 @@ def upload_image():
 
         if text:
             t=[text,"text"]
-            if len(contents)==0 or contents[-1]!=t:
-                contents.append(t)
+            if len(contents)==0 or contents[0]!=t:
+                contents.insert(0,t)
         else:
             file = request.files['files']
             filename = secure_filename(file.filename)
             path = os.path.join(upload_folder, filename)
             file.save(path)
-            p=[path,"img"]
-            if len(contents)==0 or contents[-1]!=p:
-                contents.append([path,"img"])
+            kind = filetype.guess(path)
+            type,extension = str(kind.mime).split("/")
+
+            p=[path,type]
+            #print(p)
+            if len(contents)==0 or contents[0]!=p:
+                contents.insert(0,p)
 
         return render_template("index.html",content=contents)
     except:
         print("Error")
-        return render_template('index.html',content=contents)
+        return render_template('index.html',content=content)
 
 
 
